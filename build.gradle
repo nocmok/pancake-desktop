@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+project.ext.gdal_dependencies = "${projectDir}/libs/pancake-0.1-SNAPSHOT/gdal_dependencies"
+project.ext.native = "${projectDir}/libs/pancake-0.1-SNAPSHOT/native"
+project.ext.jni = "${projectDir}/libs/pancake-0.1-SNAPSHOT"
+project.ext.debug = true
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: project.ext.jni, include: ["*.jar"])
+    testImplementation(platform('org.junit:junit-bom:5.7.0'))
+	testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+compileJava {
+    options.encoding = "UTF-8"
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+javafx {
+    version = '15'
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+run {
+    environment "PATH", "${environment.PATH};${project.ext.gdal_dependencies}"
+    systemProperty("java.library.path", project.ext.native)
+}
+
+test {
+    environment "PATH", "${environment.PATH};${project.ext.gdal_dependencies}"
+    systemProperty("java.library.path", project.ext.native)
+
+    testLogging.showStandardStreams = project.ext.debug
+    useJUnitPlatform()
+}
+
+mainClassName = 'com.nocmok.pancakegui.PancakeApp'
+
+task unzip(type: Copy) {
+    def zipFile = file("${projectDir}/libs/pancake-0.1-SNAPSHOT.zip")
+    def outputDir = file("${projectDir}/libs/pancake-0.1-SNAPSHOT")
+ 
+    from zipTree(zipFile)
+    into outputDir
+}
+
+build.dependsOn unzip
