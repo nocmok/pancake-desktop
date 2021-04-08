@@ -1,0 +1,74 @@
+{
+  rusty-green: #0ecb9d;
+}
+
+@font-face {
+  font-family: "Roboto Light";
+  src: url("../fonts/Roboto-Light.ttf");
+}
+
+.root {
+  -fx-background-color: white;
+  background-color: white;
+  -fx-font-family: "Roboto Light";
+  font-family: "Roboto Light";
+  -fx-font-size: 14;
+  font-size: 14;
+  -fx-text-fill: black;
+}
+
+.pnk-button {
+  -fx-alignment: center;
+  -fx-background-color: rusty-green;
+  background-color: rusty-green;
+  -fx-border-radius: 10 10 10 10;
+  border-radius: 10 10 10 10;
+  -fx-background-radius: 10 10 10 10;
+  -fx-text-fill: white;
+  -fx-pref-width: 100;
+  -fx-pref-height: 35;
+}
+
+.more-button {
+  -fx-background-image: url('../img/more-gray.png');
+  background-image: url('../img/more-gray.png');
+  -fx-pref-width: 20;
+  -fx-pref-height: 20;
+  -fx-background-size: 20 20;
+  -fx-background-position: center;
+  -fx-background-color: transparent;
+  -fx-background-repeat: no-repeat;
+}
+
+.play-button {
+  -fx-background-image: url('../img/play.png');
+  background-image: url('../img/play.png');
+  -fx-pref-width: 20;
+  -fx-pref-height: 20;
+  -fx-background-size: 20 20;
+  -fx-background-position: center;
+  -fx-background-color: transparent;
+  -fx-background-repeat: no-repeat;
+}
+
+.zoomin-button {
+  -fx-background-image: url('../img/zoom-in.png');
+  background-image: url('../img/zoom-in.png');
+  -fx-pref-width: 20;
+  -fx-pref-height: 20;
+  -fx-background-size: 20 20;
+  -fx-background-position: center;
+  -fx-background-color: transparent;
+  -fx-background-repeat: no-repeat;
+}
+
+.zoomout-button {
+  -fx-background-image: url('../img/zoom-out.png');
+  background-image: url('../img/zoom-out.png');
+  -fx-pref-width: 20;
+  -fx-pref-height: 20;
+  -fx-background-size: 20 20;
+  -fx-background-position: center;
+  -fx-background-color: transparent;
+  -fx-background-repeat: no-repeat;
+}

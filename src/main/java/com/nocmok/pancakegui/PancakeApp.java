@@ -9,7 +9,6 @@ import com.nocmok.pancakegui.scenes.MainScene;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class PancakeApp extends Application {
@@ -23,6 +22,11 @@ public class PancakeApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         PancakeApp.app = this;
+        
+        primaryStage.setMinHeight(600);
+        primaryStage.setMinWidth(800);
+        primaryStage.setTitle("Pancake");
+
         primaryStage.setScene(new MainScene());
         primaryStage.show();
     }
