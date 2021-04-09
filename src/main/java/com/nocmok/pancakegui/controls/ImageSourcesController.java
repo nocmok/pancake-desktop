@@ -1,12 +1,29 @@
 package com.nocmok.pancakegui.controls;
 
+import java.io.File;
+import java.net.URL;
+import java.util.Map;
+import java.util.ResourceBundle;
+
+import com.nocmok.pancakegui.PancakeApp;
+import com.nocmok.pancakegui.pojo.ImageInfo;
+import com.nocmok.pancakegui.pojo.SourceInfo;
+import com.nocmok.pancakegui.utils.ImageUtils;
+
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-public class ImageSourcesController {
+public class ImageSourcesController implements Initializable {
 
     @FXML
     private ImageView imageOverview;
@@ -24,16 +41,52 @@ public class ImageSourcesController {
 
     }
 
-    @FXML
-    private void initialize() {
-
+    public void addImageSource(SourceInfo sourceInfo, ImageInfo imageInfo) {
+        ImageSourceController newSource = ImageSourceController.getNew();
+        if (newSource == null) {
+            return;
+        }
+        newSource.setSourceInfo(sourceInfo);
+        newSource.setImageInfo(imageInfo);
+        sourceListVBox.getChildren().add(newSource.root());
     }
 
-    public void addImageSource() {
-
+    public void removeImageSource(SourceInfo info) {
+        throw new UnsupportedOperationException("not implemented");
     }
 
-    public void removeImageSource() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        addSourceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onAddSourceClickedEventHandler);
+    }
 
+    private void onAddSourceClickedEventHandler(MouseEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose image file");
+        File file = fileChooser.showOpenDialog(PancakeApp.app().primaryStage());
+        if (file == null) {
+            return;
+        }
+        SourceInfoDialogController dialogController = SourceInfoDialogController.getNew();
+        if (dialogController == null) {
+            return;
+        }
+        Stage dialog = new Stage();
+        dialog.setScene(new Scene(dialogController.root()));
+        dialog.setResizable(false);
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.initModality(Modality.WINDOW_MODAL);
+
+        ImageUtils.get().getInfo(file, dialogController::setInfo);
+
+        dialog.showAndWait();
+
+        ImageInfo imageInfo = dialogController.getInfo();
+        Map<Integer, String> mapping = dialogController.mapping();
+        if (mapping == null) {
+            return;
+        }
+        SourceInfo sourceInfo = SourceInfo.of(file, mapping);
+        addImageSource(sourceInfo, imageInfo);
     }
 }

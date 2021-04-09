@@ -18,11 +18,11 @@
     <ImageExplorer fx:id="imageExplorer" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="1"/>
     <fx:include fx:id="toolbar" source="toolbar_layout.fxml" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="1"/>
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" percentWidth="30" fillWidth="true" />
-        <ColumnConstraints hgrow="SOMETIMES" percentWidth="70" fillWidth="true" />
+        <ColumnConstraints hgrow="SOMETIMES" percentWidth="30" fillWidth="true" halignment="CENTER"/>
+        <ColumnConstraints hgrow="SOMETIMES" percentWidth="70" fillWidth="true" halignment="CENTER"/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints vgrow="NEVER" fillHeight="true" prefHeight="50" />
-        <RowConstraints vgrow="SOMETIMES" fillHeight="true" />
+        <RowConstraints vgrow="NEVER" fillHeight="true" prefHeight="50" valignment="CENTER"/>
+        <RowConstraints vgrow="SOMETIMES" fillHeight="true" valignment="CENTER"/>
     </rowConstraints>
 </GridPane>

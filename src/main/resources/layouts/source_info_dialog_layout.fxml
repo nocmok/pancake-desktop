@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.ScrollPane?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/style.css" styleClass="pnk-dialog" fx:controller="com.nocmok.pancakegui.controls.SourceInfoDialogController">
+    <HBox GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <ImageView fx:id="imageOverview" fitWidth="60" fitHeight="60" styleClass="image-overview"></ImageView>
+        <VBox spacing="5">
+            <Label fx:id="imageName"></Label>
+            <Label fx:id="imageResolution"></Label>
+            <Label fx:id="imageFormat"></Label>
+        </VBox>
+    </HBox>
+    <ScrollPane hbarPolicy="NEVER" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <VBox fx:id="bandList"></VBox>
+    </ScrollPane>
+    <Button fx:id="addButton" styleClass="pnk-button" GridPane.columnIndex="0" GridPane.rowIndex="2">Add</Button>
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" halignment="CENTER" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="NEVER" fillHeight="true" prefHeight="100" />
+        <RowConstraints vgrow="SOMETIMES" fillHeight="true" />
+        <RowConstraints vgrow="NEVER" fillHeight="true" prefHeight="60" />
+    </rowConstraints>
+</GridPane>

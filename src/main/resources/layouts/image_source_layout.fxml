@@ -16,7 +16,7 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/style.css" fx:controller="com.nocmok.pancakegui.controls.ImageSourceController">
     <left>
-        <ImageView fx:id="imageOverview"></ImageView>
+        <ImageView fx:id="imageOverview" fitWidth="60" fitHeight="60" styleClass="image-overview"></ImageView>
     </left>
     <center>
         <VBox alignment="CENTER_LEFT">

@@ -72,3 +72,13 @@
   -fx-background-color: transparent;
   -fx-background-repeat: no-repeat;
 }
+
+.image-overview {
+  -fx-fit-width: 60;
+  -fx-fit-height: 60;
+}
+
+.pnk-dialog {
+  -fx-pref-width: 300;
+  -fx-pref-height: 400;
+}
