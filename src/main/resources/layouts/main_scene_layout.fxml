@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import com.nocmok.pancakegui.controls.ImageExplorer?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" id="root" stylesheets="@../css/style.css">
+<GridPane xmlns:fx="http://javafx.com/fxml" id="root" stylesheets="@../css/style.css" fx:controller="com.nocmok.pancakegui.controls.MainSceneController">
     <fx:include fx:id="imageSources" source="image_sources_layout.fxml" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="2"/>
     <ImageExplorer fx:id="imageExplorer" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="1"/>
     <fx:include fx:id="toolbar" source="toolbar_layout.fxml" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="1"/>

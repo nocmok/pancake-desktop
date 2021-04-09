@@ -18,8 +18,8 @@
     <Label fx:id="headerLabel" GridPane.columnIndex="0" GridPane.rowIndex="0" textAlignment="CENTER">
         Sources
     </Label>
-    <ScrollPane GridPane.columnIndex="0" GridPane.rowIndex="1" hbarPolicy="NEVER" vbarPolicy="NEVER">
-        <VBox fx:id="sourceListVBox" spacing="5"></VBox>
+    <ScrollPane GridPane.columnIndex="0" GridPane.rowIndex="1" hbarPolicy="NEVER" vbarPolicy="NEVER" fitToWidth="true">
+        <VBox fx:id="sourceListVBox" spacing="5" fillWidth="true"></VBox>
     </ScrollPane>
     <Button fx:id="addSourceButton" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="pnk-button">
         Add source

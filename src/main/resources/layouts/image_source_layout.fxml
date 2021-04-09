@@ -20,6 +20,9 @@
     </left>
     <center>
         <VBox alignment="CENTER_LEFT">
+            <BorderPane.margin>
+                <Insets left="10" />
+            </BorderPane.margin>
             <Label fx:id="imageName">path</Label>
             <Label fx:id="imageResolution">resolution</Label>
             <Label fx:id="imagePhotometry">photometry</Label>
