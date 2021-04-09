@@ -1,18 +1,14 @@
 package com.nocmok.pancakegui.controls;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import com.nocmok.pancakegui.PancakeApp;
 import com.nocmok.pancakegui.pojo.ImageInfo;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -23,7 +19,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class SourceInfoDialogController implements Initializable {
+public class SourceInfoDialogController extends ControllerBase implements Initializable {
+
+    public static SourceInfoDialogController getNew() {
+        return ControllerBase.getNew("source_info_dialog_layout.fxml");
+    }
 
     @FXML
     private ImageView imageOverview;
@@ -50,19 +50,6 @@ public class SourceInfoDialogController implements Initializable {
     private Parent root;
 
     private BandMappingController[] mappingControllers;
-
-    public static SourceInfoDialogController getNew() {
-        FXMLLoader loader = new FXMLLoader(PancakeApp.getLayout("source_info_dialog_layout.fxml"));
-        try {
-            Parent root = loader.load();
-            SourceInfoDialogController controller = loader.getController();
-            controller.root = root;
-            return controller;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     public SourceInfoDialogController() {
     }
@@ -122,5 +109,10 @@ public class SourceInfoDialogController implements Initializable {
 
     public Parent root() {
         return root;
+    }
+
+    @Override
+    protected void setRoot(Parent root) {
+        this.root = root;
     }
 }

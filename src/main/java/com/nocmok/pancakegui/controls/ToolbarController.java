@@ -6,9 +6,14 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 
-public class ToolbarController implements Initializable {
+public class ToolbarController extends ControllerBase implements Initializable {
+
+    public static ToolbarController getNew() {
+        return ControllerBase.getNew("toolbar_layout.fxml");
+    }
 
     @FXML
     private Button playButton;
@@ -24,6 +29,8 @@ public class ToolbarController implements Initializable {
     private Runnable onZoomInButtonClicked;
 
     private Runnable onZoomOutButtonClicked;
+
+    private Parent root;
 
     public ToolbarController() {
         onPlayButtonClickedHandler = () -> {
@@ -52,5 +59,15 @@ public class ToolbarController implements Initializable {
     public void setOnZoomOutButtonClickedHandler(Runnable handler) {
         this.onZoomOutButtonClicked = Optional.ofNullable(handler).orElse(() -> {
         });
+    }
+
+    @Override
+    protected void setRoot(Parent root) {
+        this.root = root;
+    }
+
+    @Override
+    public Parent root() {
+        return root;
     }
 }

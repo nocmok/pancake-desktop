@@ -12,6 +12,7 @@ import com.nocmok.pancakegui.utils.ImageUtils;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,7 +24,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class ImageSourcesController implements Initializable {
+public class ImageSourcesController extends ControllerBase implements Initializable {
+
+    public static ImageSourcesController getNew() {
+        return ControllerBase.getNew("image_sources_layout.fxml");
+    }
 
     @FXML
     private ImageView imageOverview;
@@ -36,6 +41,8 @@ public class ImageSourcesController implements Initializable {
 
     @FXML
     private Button addSourceButton;
+
+    private Parent root;
 
     public ImageSourcesController() {
 
@@ -88,5 +95,15 @@ public class ImageSourcesController implements Initializable {
         }
         SourceInfo sourceInfo = SourceInfo.of(file, mapping);
         addImageSource(sourceInfo, imageInfo);
+    }
+
+    @Override
+    protected void setRoot(Parent root) {
+        this.root = root;
+    }
+
+    @Override
+    public Parent root() {
+        return root;
     }
 }

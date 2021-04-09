@@ -1,36 +1,24 @@
 package com.nocmok.pancakegui.controls;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.nocmok.pancake.Spectrum;
-import com.nocmok.pancakegui.PancakeApp;
 import com.nocmok.pancakegui.pojo.ImageInfo;
 import com.nocmok.pancakegui.pojo.SourceInfo;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
-public class ImageSourceController implements Initializable {
+public class ImageSourceController extends ControllerBase implements Initializable {
 
     public static ImageSourceController getNew() {
-        FXMLLoader loader = new FXMLLoader(PancakeApp.getLayout("image_source_layout.fxml"));
-        try {
-            Parent root = loader.load();
-            ImageSourceController controller = loader.getController();
-            controller.root = root;
-            return controller;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return ControllerBase.getNew("image_source_layout.fxml");
     }
 
     @FXML
@@ -80,5 +68,10 @@ public class ImageSourceController implements Initializable {
 
     public Parent root() {
         return root;
+    }
+
+    @Override
+    protected void setRoot(Parent root) {
+        this.root = root;
     }
 }

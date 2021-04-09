@@ -1,35 +1,23 @@
 package com.nocmok.pancakegui.controls;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import com.nocmok.pancake.Spectrum;
-import com.nocmok.pancakegui.PancakeApp;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
-public class BandMappingController implements Initializable {
+public class BandMappingController extends ControllerBase implements Initializable {
 
     public static BandMappingController getNew() {
-        FXMLLoader loader = new FXMLLoader(PancakeApp.getLayout("band_mapping_layout.fxml"));
-        try {
-            Parent root = loader.load();
-            BandMappingController controller = loader.getController();
-            controller.root = root;
-            return controller;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return ControllerBase.getNew("band_mapping_layout.fxml");
     }
 
     @FXML
@@ -65,5 +53,10 @@ public class BandMappingController implements Initializable {
 
     public Parent root() {
         return root;
+    }
+
+    @Override
+    protected void setRoot(Parent root) {
+        this.root = root;
     }
 }
