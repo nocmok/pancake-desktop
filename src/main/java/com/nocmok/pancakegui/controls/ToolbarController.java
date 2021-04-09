@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 
 public class ToolbarController extends ControllerBase implements Initializable {
 
@@ -43,7 +44,21 @@ public class ToolbarController extends ControllerBase implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        playButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onPlayButtonClicked);
+        zoominButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onZoomInButtonClicked);
+        zoomoutButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onZoomOutButtonClicked);
+    }
 
+    private void onPlayButtonClicked(MouseEvent event) {
+        onPlayButtonClickedHandler.run();
+    }
+
+    private void onZoomInButtonClicked(MouseEvent event) {
+        onZoomInButtonClicked.run();
+    }
+
+    private void onZoomOutButtonClicked(MouseEvent event) {
+        onZoomOutButtonClicked.run();
     }
 
     public void setOnPlayButtonClickedHandler(Runnable handler) {
