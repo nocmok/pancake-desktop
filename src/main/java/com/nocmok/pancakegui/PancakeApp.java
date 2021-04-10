@@ -1,6 +1,9 @@
 package com.nocmok.pancakegui;
 
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import com.nocmok.pancake.Pancake;
 import com.nocmok.pancakegui.scenes.MainScene;
@@ -18,22 +21,42 @@ public class PancakeApp extends Application {
 
     private Stage primaryStage;
 
+    private Session session;
+
+    private ExecutorService worker = Executors.newFixedThreadPool(1, new ThreadFactory() {
+        @Override
+        public Thread newThread(Runnable r) {
+            Thread t = Executors.defaultThreadFactory().newThread(r);
+            t.setDaemon(true);
+            return t;
+        }
+    });
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         PancakeApp.app = this;
         this.primaryStage = primaryStage;
+        session = new Session();
 
-        primaryStage.setMinHeight(600);
-        primaryStage.setMinWidth(800);
+        primaryStage.setHeight(600);
+        primaryStage.setWidth(800);
         primaryStage.setTitle("Pancake");
-
         primaryStage.setScene(new MainScene());
-        primaryStage.toFront();
+        primaryStage.centerOnScreen();
+
         primaryStage.show();
     }
 
     public Stage primaryStage() {
         return primaryStage;
+    }
+
+    public Session session() {
+        return session;
+    }
+
+    public ExecutorService worker() {
+        return worker;
     }
 
     public static void main(String[] args) {

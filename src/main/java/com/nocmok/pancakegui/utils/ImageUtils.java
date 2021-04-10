@@ -2,28 +2,17 @@ package com.nocmok.pancakegui.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 import java.util.function.Consumer;
 
 import com.nocmok.pancake.Pancake;
 import com.nocmok.pancake.PancakeDataset;
+import com.nocmok.pancakegui.PancakeApp;
 import com.nocmok.pancakegui.pojo.ImageInfo;
 
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 
 public class ImageUtils {
-
-    private ExecutorService worker = Executors.newFixedThreadPool(1, new ThreadFactory(){
-        @Override
-        public Thread newThread(Runnable r) {
-            Thread t = Executors.defaultThreadFactory().newThread(r);
-            t.setDaemon(true);
-            return t;
-        }
-    });
 
     private static final ImageUtils singleton = new ImageUtils();
 
@@ -39,7 +28,7 @@ public class ImageUtils {
     }
 
     public void getInfo(File imgFile, Consumer<ImageInfo> listener) {
-        worker.submit(() -> {
+        PancakeApp.app().worker().submit(() -> {
             ImageInfo info = getInfo(imgFile);
             Platform.runLater(() -> listener.accept(info));
         });
