@@ -15,7 +15,8 @@
 <?import javafx.scene.control.ScrollPane?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/style.css" styleClass="pnk-dialog" fx:controller="com.nocmok.pancakegui.controls.SourceInfoDialogController">
-    <HBox GridPane.columnIndex="0" GridPane.rowIndex="0">
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Source</Label>
+    <HBox GridPane.columnIndex="0" GridPane.rowIndex="1">
         <ImageView fx:id="imageOverview" fitWidth="60" fitHeight="60" styleClass="image-overview"></ImageView>
         <VBox spacing="5">
             <Label fx:id="imageName"></Label>
@@ -23,14 +24,15 @@
             <Label fx:id="imageFormat"></Label>
         </VBox>
     </HBox>
-    <ScrollPane hbarPolicy="NEVER" GridPane.columnIndex="0" GridPane.rowIndex="1">
+    <ScrollPane hbarPolicy="NEVER" GridPane.columnIndex="0" GridPane.rowIndex="2">
         <VBox fx:id="bandList"></VBox>
     </ScrollPane>
-    <Button fx:id="addButton" styleClass="pnk-button" GridPane.columnIndex="0" GridPane.rowIndex="2">Add</Button>
+    <Button fx:id="addButton" styleClass="pnk-button" GridPane.columnIndex="0" GridPane.rowIndex="3">Add</Button>
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" halignment="CENTER" />
     </columnConstraints>
     <rowConstraints>
+        <RowConstraints vgrow="NEVER" fillHeight="true" prefHeight="20" />
         <RowConstraints vgrow="NEVER" fillHeight="true" prefHeight="100" />
         <RowConstraints vgrow="SOMETIMES" fillHeight="true" />
         <RowConstraints vgrow="NEVER" fillHeight="true" prefHeight="60" />
