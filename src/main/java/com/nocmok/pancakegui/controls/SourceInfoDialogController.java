@@ -2,11 +2,14 @@ package com.nocmok.pancakegui.controls;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import com.nocmok.pancake.Spectrum;
 import com.nocmok.pancakegui.pojo.ImageInfo;
 import com.nocmok.pancakegui.utils.ImageUtils;
 
@@ -48,11 +51,11 @@ public class SourceInfoDialogController extends ControllerBase implements Initia
     @FXML
     private Button addButton;
 
-    private Map<Integer, String> mapping;
+    private Map<Integer, Spectrum> mapping;
 
     private Parent root;
 
-    private BandMappingController[] mappingControllers;
+    private List<DropDownOptionController<Spectrum>> mappingControllers;
 
     public SourceInfoDialogController() {
     }
@@ -63,7 +66,7 @@ public class SourceInfoDialogController extends ControllerBase implements Initia
         addButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onAddSourceClicked);
     }
 
-    public Map<Integer, String> runDialog(File imgFile) {
+    public Map<Integer, Spectrum> runDialog(File imgFile) {
         Stage dialog = new Stage();
         dialog.setScene(new Scene(root));
         dialog.setResizable(false);
@@ -74,19 +77,23 @@ public class SourceInfoDialogController extends ControllerBase implements Initia
         return mapping;
     }
 
-    private Map<Integer, String> parseMapping() {
+    private Map<Integer, Spectrum> parseMapping() {
         if (mappingControllers == null) {
             return Collections.emptyMap();
         }
-        Map<Integer, String> mapping = new HashMap<>();
-        for (int i = 0; i < mappingControllers.length; ++i) {
-            if (mappingControllers[i] == null) {
+        Map<Integer, Spectrum> mapping = new HashMap<>();
+        for (int i = 0; i < mappingControllers.size(); ++i) {
+            if (mappingControllers.get(i) == null) {
                 continue;
             }
-            if (!mappingControllers[i].isAnySelected()) {
+            if (!mappingControllers.get(i).isAnySelected()) {
                 continue;
             }
-            mapping.put(i, mappingControllers[i].getSelected());
+            Spectrum value = mappingControllers.get(i).getSelected();
+            if (value.equals(Spectrum.NONE)) {
+                continue;
+            }
+            mapping.put(i, value);
         }
         return mapping;
     }
@@ -106,15 +113,18 @@ public class SourceInfoDialogController extends ControllerBase implements Initia
         imageResolution.setText(info.getXsize() + "x" + info.getYsize());
         imageFormat.setText(info.getImageFormat());
 
-        mappingControllers = new BandMappingController[info.getnBands()];
+        mappingControllers = new ArrayList<DropDownOptionController<Spectrum>>(info.getnBands());
         for (int i = 0; i < info.getnBands(); ++i) {
-            mappingControllers[i] = BandMappingController.getNew();
-            mappingControllers[i].setBandName("band#" + i);
-            bandList.getChildren().add(mappingControllers[i].root());
+            DropDownOptionController<Spectrum> controller = DropDownOptionController.getNew();
+            mappingControllers.add(controller);
+            controller.setOptionName("band#" + i);
+            controller.setOptions(Spectrum.all());
+            controller.setDefault(Spectrum.NONE);
+            bandList.getChildren().add(controller.root());
         }
     }
 
-    public Map<Integer, String> mapping() {
+    public Map<Integer, Spectrum> mapping() {
         return mapping;
     }
 

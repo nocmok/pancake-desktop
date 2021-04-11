@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import com.nocmok.pancake.Spectrum;
 import com.nocmok.pancakegui.PancakeApp;
 import com.nocmok.pancakegui.pojo.SourceInfo;
 
@@ -81,15 +82,15 @@ public class ImageSourcesController extends ControllerBase implements Initializa
         if (dialogController == null) {
             return;
         }
-        Map<Integer, String> mapping = dialogController.runDialog(file);
+        Map<Integer, Spectrum> mapping = dialogController.runDialog(file);
         if (mapping == null) {
             return;
         }
-        if (mapping.isEmpty() || !SourceInfo.isValidMappingStr(mapping)) {
+        if (mapping.isEmpty() || !SourceInfo.isValidMapping(mapping)) {
             notifyBandMappingInvalid();
             return;
         }
-        SourceInfo sourceInfo = SourceInfo.of(file, mapping);
+        SourceInfo sourceInfo = new SourceInfo(file, mapping);
         if (!PancakeApp.app().session().addSource(sourceInfo)) {
             notifyCannotAddToDataset();
             return;
