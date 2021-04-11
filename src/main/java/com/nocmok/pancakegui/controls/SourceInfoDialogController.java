@@ -1,5 +1,6 @@
 package com.nocmok.pancakegui.controls;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,17 +8,21 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.nocmok.pancakegui.pojo.ImageInfo;
+import com.nocmok.pancakegui.utils.ImageUtils;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class SourceInfoDialogController extends ControllerBase implements Initializable {
 
@@ -45,8 +50,6 @@ public class SourceInfoDialogController extends ControllerBase implements Initia
 
     private Map<Integer, String> mapping;
 
-    private ImageInfo info;
-
     private Parent root;
 
     private BandMappingController[] mappingControllers;
@@ -58,6 +61,17 @@ public class SourceInfoDialogController extends ControllerBase implements Initia
     public void initialize(URL location, ResourceBundle resources) {
 
         addButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onAddSourceClicked);
+    }
+
+    public Map<Integer, String> runDialog(File imgFile) {
+        Stage dialog = new Stage();
+        dialog.setScene(new Scene(root));
+        dialog.setResizable(false);
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.initModality(Modality.WINDOW_MODAL);
+        ImageUtils.get().getInfo(imgFile, this::setInfo);
+        dialog.showAndWait();
+        return mapping;
     }
 
     private Map<Integer, String> parseMapping() {
@@ -84,8 +98,9 @@ public class SourceInfoDialogController extends ControllerBase implements Initia
         stage.close();
     }
 
-    public void setInfo(ImageInfo info) {
-        this.info = info;
+    private void setInfo(ImageInfo info) {
+        bandList.getChildren().clear();
+
         imageOverview.setImage(info.getOverview());
         imageName.setText(info.getPath().getName());
         imageResolution.setText(info.getXsize() + "x" + info.getYsize());
@@ -97,10 +112,6 @@ public class SourceInfoDialogController extends ControllerBase implements Initia
             mappingControllers[i].setBandName("band#" + i);
             bandList.getChildren().add(mappingControllers[i].root());
         }
-    }
-
-    public ImageInfo getInfo() {
-        return info;
     }
 
     public Map<Integer, String> mapping() {
