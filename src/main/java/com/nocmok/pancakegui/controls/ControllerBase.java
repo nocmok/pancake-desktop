@@ -5,9 +5,10 @@ import java.io.IOException;
 import com.nocmok.pancakegui.PancakeApp;
 
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 
-public abstract class ControllerBase {
+public abstract class ControllerBase implements Initializable {
 
     public static <T extends ControllerBase> T getNew(String layoutName) {
         FXMLLoader loader = new FXMLLoader(PancakeApp.getLayout(layoutName));
