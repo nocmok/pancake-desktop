@@ -16,6 +16,8 @@ public class ImageUtils {
 
     private static final ImageUtils singleton = new ImageUtils();
 
+    private static final LRUCache<File, ImageInfo> imageInfoCache = new LRUCache<File, ImageInfo>(10);
+
     public static ImageUtils get() {
         return singleton;
     }
@@ -28,6 +30,10 @@ public class ImageUtils {
     }
 
     public void getInfo(File imgFile, Consumer<ImageInfo> listener) {
+        ImageInfo infoInCache = imageInfoCache.get(imgFile);
+        if (infoInCache != null) {
+            listener.accept(infoInCache);
+        }
         PancakeApp.app().worker().submit(() -> {
             ImageInfo info = getInfo(imgFile);
             Platform.runLater(() -> listener.accept(info));
@@ -45,10 +51,15 @@ public class ImageUtils {
 
     /** TODO (image format detection) */
     public ImageInfo getInfo(File imgFile) {
+        ImageInfo ii = imageInfoCache.get(imgFile);
+        if (ii != null) {
+            return ii;
+        }
         Image overview = getImageThumbnail(imgFile, 100, 100);
         PancakeDataset dataset = Pancake.open(imgFile, Pancake.ACCESS_READONLY);
-        ImageInfo ii = new ImageInfo(overview, dataset.bands().get(0).getXSize(), dataset.bands().get(0).getYSize(),
-                imgFile, dataset.bands().size(), "unknown");
+        ii = new ImageInfo(overview, dataset.bands().get(0).getXSize(), dataset.bands().get(0).getYSize(), imgFile,
+                dataset.bands().size(), "unknown");
+        imageInfoCache.add(imgFile, ii);
         return ii;
     }
 }
