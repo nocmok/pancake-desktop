@@ -60,6 +60,16 @@ public class ImageSourcesController extends ControllerBase implements Initializa
         addSourceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onAddSourceClickedEventHandler);
     }
 
+    /** TODO */
+    private void notifyBandMappingInvalid() {
+        System.out.println(":::Pancake::: Invalid band mapping");
+    }
+
+    /** TODO */
+    private void notifyCannotAddToDataset() {
+        System.out.println(":::Pancake::: Cannot add to dataset");
+    }
+
     private void onAddSourceClickedEventHandler(MouseEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose image file");
@@ -75,10 +85,16 @@ public class ImageSourcesController extends ControllerBase implements Initializa
         if (mapping == null) {
             return;
         }
-        SourceInfo sourceInfo = SourceInfo.of(file, mapping);
-        if (PancakeApp.app().session().addSource(sourceInfo)) {
-            addImageSource(sourceInfo);
+        if (mapping.isEmpty() || !SourceInfo.isValidMappingStr(mapping)) {
+            notifyBandMappingInvalid();
+            return;
         }
+        SourceInfo sourceInfo = SourceInfo.of(file, mapping);
+        if (!PancakeApp.app().session().addSource(sourceInfo)) {
+            notifyCannotAddToDataset();
+            return;
+        }
+        addImageSource(sourceInfo);
     }
 
     @Override
