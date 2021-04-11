@@ -35,12 +35,13 @@ public class Session {
             return false;
         }
         dataset.add(source);
+        spectrumAssigned.addAll(source.mapping().values());
         return true;
     }
 
     public boolean removeSource(SourceInfo source) {
         boolean success = dataset.remove(source);
-        spectrumAssigned.retainAll(source.mapping().values());
+        spectrumAssigned.removeAll(source.mapping().values());
         return success;
     }
 
