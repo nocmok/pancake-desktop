@@ -19,7 +19,7 @@
     <ScrollPane hbarPolicy="NEVER" GridPane.columnIndex="0" GridPane.rowIndex="1" fitToWidth="true" >
         <VBox fx:id="optionsVBox" fillWidth="true"></VBox>
     </ScrollPane>
-    <Button fx:id="pansharpButton" styleClass="pnk-button" GridPane.columnIndex="0" GridPane.rowIndex="2">Pansharp</Button>
+    <Button fx:id="pansharpButton" styleClass="pnk-button" GridPane.columnIndex="0" GridPane.rowIndex="2">Run</Button>
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" halignment="CENTER" />
     </columnConstraints>

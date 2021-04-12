@@ -3,6 +3,7 @@ package com.nocmok.pancakegui.controls;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.nocmok.pancake.Spectrum;
@@ -13,6 +14,8 @@ import com.nocmok.pancakegui.utils.ImageUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 
 public class ImageSourceController extends ControllerBase {
@@ -33,14 +36,57 @@ public class ImageSourceController extends ControllerBase {
     @FXML
     private Label imagePhotometry;
 
+    @FXML
+    private MenuButton moreButton;
+
+    @FXML
+    private MenuItem editItem;
+
+    @FXML
+    private MenuItem removeItem;
+
+    @FXML
     private Parent root;
+
+    private SourceInfo sourceInfo;
+
+    private Runnable onEditListener = () -> {
+    };
+
+    private Runnable onRemoveListener = () -> {
+    };
 
     public ImageSourceController() {
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        editItem.setOnAction((e) -> {
+            e.consume();
+            getOnEditListener().run();
+        });
+        removeItem.setOnAction((e) -> {
+            e.consume();
+            getOnRemoveListener().run();
+        });
+    }
 
+    private Runnable getOnEditListener() {
+        return onEditListener;
+    }
+
+    private Runnable getOnRemoveListener() {
+        return onRemoveListener;
+    }
+
+    public void setOnEditListener(Runnable listener) {
+        this.onEditListener = Optional.ofNullable(listener).orElse(() -> {
+        });
+    }
+
+    public void setOnRemoveListener(Runnable listener) {
+        this.onRemoveListener = Optional.ofNullable(listener).orElse(() -> {
+        });
     }
 
     private String mappingToString(Map<Integer, Spectrum> mapping) {
@@ -57,6 +103,7 @@ public class ImageSourceController extends ControllerBase {
     }
 
     public void setSourceInfo(SourceInfo info) {
+        this.sourceInfo = info;
         imageName.setText(info.path().getName());
         imagePhotometry.setText(mappingToString(info.mapping()));
         ImageUtils.get().getInfo(info.path(), this::setImageInfo);
@@ -67,12 +114,15 @@ public class ImageSourceController extends ControllerBase {
         imageOverview.setImage(info.getOverview());
     }
 
+    public SourceInfo getSourceInfo() {
+        return sourceInfo;
+    }
+
     public Parent root() {
         return root;
     }
 
     @Override
     protected void setRoot(Parent root) {
-        this.root = root;
     }
 }

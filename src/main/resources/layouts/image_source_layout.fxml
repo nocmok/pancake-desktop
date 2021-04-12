@@ -13,8 +13,10 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/style.css" fx:controller="com.nocmok.pancakegui.controls.ImageSourceController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" fx:controller="com.nocmok.pancakegui.controls.ImageSourceController">
     <left>
         <ImageView fx:id="imageOverview" fitWidth="60" fitHeight="60" styleClass="image-overview"></ImageView>
     </left>
@@ -29,6 +31,11 @@
         </VBox>
     </center>
     <right>
-        <Button fx:id="moreButton" styleClass="more-button"></Button>
+        <MenuButton fx:id="moreButton" styleClass="more-button">
+            <items>
+                <MenuItem fx:id="editItem" text="Edit"></MenuItem>
+                <MenuItem fx:id="removeItem" text="Remove"></MenuItem>
+            </items>
+        </MenuButton>
     </right>
 </BorderPane>

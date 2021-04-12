@@ -10,7 +10,6 @@ import com.nocmok.pancakegui.PancakeApp;
 import com.nocmok.pancakegui.pojo.SourceInfo;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -50,6 +49,31 @@ public class ImageSourcesController extends ControllerBase {
         }
         newSource.setSourceInfo(sourceInfo);
         sourceListVBox.getChildren().add(newSource.root());
+        newSource.setOnEditListener(() -> edit(newSource));
+        newSource.setOnRemoveListener(() -> remove(newSource));
+    }
+
+    private void edit(ImageSourceController source) {
+        SourceInfoDialogController controller = SourceInfoDialogController.getNew();
+        Map<Integer, Spectrum> mapping = controller.runDialog(source.getSourceInfo().path());
+        if (mapping == null) {
+            return;
+        }
+        SourceInfo newSourceInfo = new SourceInfo(source.getSourceInfo().path(), mapping);
+        PancakeApp.app().session().removeSource(source.getSourceInfo());
+        if (!PancakeApp.app().session().addSource(newSourceInfo)) {
+            PancakeApp.app().session().addSource(source.getSourceInfo());
+            notifyCannotAddToDataset();
+            return;
+        }
+        source.setSourceInfo(newSourceInfo);
+    }
+
+    private void remove(ImageSourceController source) {
+        PancakeApp.app().session().removeSource(source.getSourceInfo());
+        source.root().setManaged(false);
+        source.root().setVisible(false);
+        sourceListVBox.getChildren().remove(source.root());
     }
 
     public void removeImageSource(SourceInfo info) {

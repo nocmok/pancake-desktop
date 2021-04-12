@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Map.Entry;
 
 import com.nocmok.pancake.Spectrum;
 import com.nocmok.pancakegui.PancakeApp;
