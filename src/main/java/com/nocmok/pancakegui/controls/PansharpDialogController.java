@@ -16,6 +16,7 @@ import com.nocmok.pancake.Pancake;
 import com.nocmok.pancake.PansharpJobBuilder;
 import com.nocmok.pancake.Resampler;
 import com.nocmok.pancake.fusor.Fusor;
+import com.nocmok.pancakegui.PancakeApp;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -115,6 +116,7 @@ public class PansharpDialogController extends ControllerBase {
         dialog.setScene(new Scene(root));
         dialog.setResizable(false);
         dialog.initStyle(StageStyle.UTILITY);
+        dialog.initOwner(PancakeApp.app().primaryStage());
         dialog.initModality(Modality.WINDOW_MODAL);
         dialog.showAndWait();
         return jobBuilder;
