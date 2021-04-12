@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import com.nocmok.pancake.Bilinear;
 import com.nocmok.pancake.Compression;
@@ -24,6 +25,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -102,7 +104,21 @@ public class PansharpDialogController extends ControllerBase {
                 .setOptions(resamplers.keySet()).setDefault(NEAREST));
         controls.put(COMPRESSION, DropDownOptionController.<Compression>getNew().setOptionName("compression")
                 .setOptions(List.of(Compression.values())).setDefault(Compression.NONE));
-        controls.put(COMPRESSION_QUALITY, InputOptionController.getNew().setOptionName("compression quality"));
+        controls.put(COMPRESSION_QUALITY, InputOptionController.getNew().setOptionName("compression quality")
+                .setDefault("50").setValidator(new Function<String, Boolean>() {
+                    @Override
+                    public Boolean apply(String s) {
+                        if (s == null) {
+                            return false;
+                        }
+                        try {
+                            int quality = Integer.parseInt(s);
+                            return (quality >= 0) && (quality <= 100);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    }
+                }));
         controls.put(HIST_MATCHING,
                 CheckBoxOptionController.getNew().setOptionName("apply hist matching").setDefault(true));
         for (OptionControllerBase<?> control : controls.values()) {
@@ -123,10 +139,23 @@ public class PansharpDialogController extends ControllerBase {
     }
 
     private void onPansharpButtonClicked(MouseEvent event) {
+        if (!validate()) {
+            return;
+        }
         jobBuilder = parseBuilder();
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
+    }
+
+    private boolean validate() {
+        boolean result = true;
+        for (OptionControllerBase<?> controller : controls.values()) {
+            if (controller.getSelected() == null) {
+                result = false;
+            }
+        }
+        return result;
     }
 
     private PansharpJobBuilder parseBuilder() {

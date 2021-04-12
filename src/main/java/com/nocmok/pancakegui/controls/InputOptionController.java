@@ -1,7 +1,9 @@
 package com.nocmok.pancakegui.controls;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -23,8 +25,18 @@ public class InputOptionController extends OptionControllerBase<String> {
     @FXML
     private Parent root;
 
+    private Function<String, Boolean> validator = (s) -> true;
+
     @Override
     public String getSelected() {
+        if (textField.getStyleClass().size() > 1) {
+            textField.getStyleClass().remove(textField.getStyleClass().size() - 1);
+        }
+        if (!isValid()) {
+            textField.getStyleClass().add("pnk-input-warning");
+            return null;
+        }
+        textField.getStyleClass().add("pnk-input");
         return textField.getText();
     }
 
@@ -51,5 +63,14 @@ public class InputOptionController extends OptionControllerBase<String> {
     public InputOptionController setDefault(String value) {
         textField.setText(value);
         return this;
+    }
+
+    public InputOptionController setValidator(Function<String, Boolean> validator) {
+        this.validator = Optional.ofNullable(validator).orElse((s) -> true);
+        return this;
+    }
+
+    public boolean isValid() {
+        return validator.apply(textField.getText());
     }
 }

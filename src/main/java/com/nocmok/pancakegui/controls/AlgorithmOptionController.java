@@ -1,8 +1,10 @@
 package com.nocmok.pancakegui.controls;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import com.nocmok.pancake.fusor.Brovey;
 import com.nocmok.pancake.fusor.Fusor;
@@ -54,15 +56,39 @@ public class AlgorithmOptionController extends OptionControllerBase<Fusor> {
     @FXML
     private Parent root;
 
+    private List<OptionControllerBase<?>> controls;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        controls = new ArrayList<>();
+        controls.add(algoController);
+        controls.add(filterController);
+        controls.add(rWeightController);
+        controls.add(gWeightController);
+        controls.add(bWeightController);
+        controls.add(cutoffController);
+
         algoController.setOptionName("algorithm").setOptions(fusors).setDefault(BROVEY);
         algoController.setOnItemSelectedListener((s) -> {
             selectFusor(s);
         });
-        rWeightController.setOptionName("R weight").setDefault("1");
-        gWeightController.setOptionName("G weight").setDefault("1");
-        bWeightController.setOptionName("B weight").setDefault("1");
+        Function<String, Boolean> validator = new Function<String, Boolean>() {
+            @Override
+            public Boolean apply(String s) {
+                if (s == null) {
+                    return false;
+                }
+                try {
+                    double value = Double.parseDouble(s);
+                    return (value >= 0d) && (value <= 1d);
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
+        };
+        rWeightController.setOptionName("R weight").setDefault("1").setValidator(validator);
+        gWeightController.setOptionName("G weight").setDefault("1").setValidator(validator);
+        bWeightController.setOptionName("B weight").setDefault("1").setValidator(validator);
         filterController.setOptionName("high pass filter").setOptions(filters).setDefault(GAUSSIAN);
         cutoffController.setOptionName("cutoff frequency");
 
@@ -132,6 +158,16 @@ public class AlgorithmOptionController extends OptionControllerBase<Fusor> {
         }
     }
 
+    private boolean validate() {
+        boolean result = true;
+        for (OptionControllerBase<?> control : controls) {
+            if (control.getSelected() == null) {
+                result = false;
+            }
+        }
+        return result;
+    }
+
     public AlgorithmOptionController setDefault(String name) {
         algoController.setDefault(name);
         selectFusor(name);
@@ -140,6 +176,9 @@ public class AlgorithmOptionController extends OptionControllerBase<Fusor> {
 
     @Override
     public Fusor getSelected() {
+        if (!validate()) {
+            return null;
+        }
         return parseFusor();
     }
 
