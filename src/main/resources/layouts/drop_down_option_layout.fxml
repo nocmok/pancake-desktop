@@ -14,14 +14,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/style.css" fx:controller="com.nocmok.pancakegui.controls.DropDownOptionController">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" fx:controller="com.nocmok.pancakegui.controls.DropDownOptionController">
     <Label fx:id="optionName" GridPane.columnIndex="0" GridPane.rowIndex="0"></Label>
-    <Label GridPane.columnIndex="1" GridPane.rowIndex="0">mapping:</Label>
-    <ComboBox fx:id="dropdown" GridPane.columnIndex="2" GridPane.rowIndex="0"></ComboBox>
+    <ComboBox fx:id="dropdown" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="100"></ComboBox>
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" percentWidth="0.4" halignment="LEFT" />
-        <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" percentWidth="0.2" halignment="RIGHT" />
-        <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" percentWidth="0.4" halignment="RIGHT" />
+        <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" halignment="LEFT" />
+        <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" halignment="RIGHT" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints vgrow="SOMETIMES" fillHeight="true" prefHeight="20" valignment="CENTER" />
