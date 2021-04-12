@@ -27,7 +27,6 @@ public class PancakeApp extends Application {
         @Override
         public Thread newThread(Runnable r) {
             Thread t = Executors.defaultThreadFactory().newThread(r);
-            t.setDaemon(true);
             return t;
         }
     });
@@ -44,9 +43,12 @@ public class PancakeApp extends Application {
         primaryStage.setScene(new MainScene());
         primaryStage.centerOnScreen();
 
-        primaryStage.onCloseRequestProperty().addListener((e) -> worker.shutdown());
-
         primaryStage.show();
+    }
+
+    @Override
+    public void stop() {
+        worker.shutdown();
     }
 
     public Stage primaryStage() {
