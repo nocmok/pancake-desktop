@@ -66,6 +66,9 @@ public class MainSceneController extends ControllerBase implements Initializable
     public void pansharp() {
         FileChooser fChooser = new FileChooser();
         File dstFile = fChooser.showSaveDialog(PancakeApp.app().primaryStage());
+        if (dstFile == null) {
+            return;
+        }
         PansharpDialogController controller = PansharpDialogController.getNew();
         if (controller == null) {
             return;
