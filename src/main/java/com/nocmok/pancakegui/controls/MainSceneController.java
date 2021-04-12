@@ -1,7 +1,9 @@
 package com.nocmok.pancakegui.controls;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -14,19 +16,21 @@ import com.nocmok.pancake.PancakeDataset;
 import com.nocmok.pancake.PansharpJob;
 import com.nocmok.pancake.PansharpJobBuilder;
 import com.nocmok.pancake.Spectrum;
+import com.nocmok.pancake.PancakeProgressListener;
+
 import com.nocmok.pancakegui.PancakeApp;
 import com.nocmok.pancakegui.Session;
 import com.nocmok.pancakegui.pojo.SourceInfo;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 
-public class MainSceneController extends ControllerBase implements Initializable {
+public class MainSceneController extends ControllerBase {
 
     public static MainSceneController getNew() {
         return ControllerBase.getNew("main_scene_layout.fxml");
@@ -77,25 +81,58 @@ public class MainSceneController extends ControllerBase implements Initializable
         if (jobBuilder == null) {
             return;
         }
+        ProgressDialogController progress = ProgressDialogController.getNew();
+        if (progress == null) {
+            return;
+        }
+        progress.setProgress(1f);
+        progress.setMessage("start processing ...");
+        progress.runDialog();
+
         PancakeApp.app().worker().submit(() -> {
-            System.out.println(":::START PROCESSING:::");
             List<SourceInfo> ds = session.minifyDataset();
             Map<Spectrum, PancakeBand> source = new EnumMap<>(Spectrum.class);
+            List<PancakeDataset> datasets = new ArrayList<>();
             try {
                 for (SourceInfo si : ds) {
                     PancakeDataset pnkDs = Pancake.open(si.path(), Pancake.ACCESS_READONLY);
+                    datasets.add(pnkDs);
                     for (Entry<Integer, Spectrum> entry : si.mapping().entrySet()) {
                         source.put(entry.getValue(), pnkDs.bands().get(entry.getKey()));
                     }
                 }
                 PansharpJob job = jobBuilder.withOutputFile(dstFile).withSource(source).build();
+                job.setProgressListener(new PancakeProgressListener() {
+                    @Override
+                    public void listen(Integer phase, Double p, String message) {
+                        Platform.runLater(() -> {
+                            log(progress, phase, p, message);
+                        });
+                    }
+                });
                 PancakeDataset result = job.pansharp();
                 result.flushCache();
-                System.out.println(":::COMPLETE PROCESSING:::");
+                datasets.add(result);
+                Platform.runLater(() -> {
+                    progress.closeDialog();
+                });
             } catch (RuntimeException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    for (PancakeDataset pnkDs : datasets) {
+                        pnkDs.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
+    }
+
+    private void log(ProgressDialogController frame, int phase, double progress, String message) {
+        frame.setMessage(message);
+        frame.setProgress(progress);
     }
 
     public void zoomIn() {

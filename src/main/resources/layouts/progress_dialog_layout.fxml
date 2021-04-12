@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ProgressBar?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" styleClass="pnk-progress-dialog" fx:controller="com.nocmok.pancakegui.controls.ProgressDialogController">
+    <padding>
+        <Insets left="5" right="5" top="5" bottom="5" />
+    </padding>
+    <ProgressBar fx:id="progressBar" styleClass="pnk-progress-bar" prefWidth="${root.prefWidth}" GridPane.columnIndex="0" GridPane.rowIndex="0"></ProgressBar>
+    <Label fx:id="logs" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+    <Button fx:id="cancelButton" styleClass="pnk-button" GridPane.columnIndex="0" GridPane.rowIndex="2">Cancel</Button>
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" halignment="CENTER" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="SOMETIMES" fillHeight="true" valignment="CENTER" />
+        <RowConstraints vgrow="SOMETIMES" fillHeight="true" valignment="CENTER" />
+        <RowConstraints vgrow="SOMETIMES" fillHeight="true" valignment="CENTER" />
+    </rowConstraints>
+</GridPane>
