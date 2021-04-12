@@ -8,14 +8,14 @@ import java.util.ResourceBundle;
 import com.nocmok.pancake.Spectrum;
 import com.nocmok.pancakegui.pojo.ImageInfo;
 import com.nocmok.pancakegui.pojo.SourceInfo;
+import com.nocmok.pancakegui.utils.ImageUtils;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
-public class ImageSourceController extends ControllerBase implements Initializable {
+public class ImageSourceController extends ControllerBase {
 
     public static ImageSourceController getNew() {
         return ControllerBase.getNew("image_source_layout.fxml");
@@ -59,6 +59,7 @@ public class ImageSourceController extends ControllerBase implements Initializab
     public void setSourceInfo(SourceInfo info) {
         imageName.setText(info.path().getName());
         imagePhotometry.setText(mappingToString(info.mapping()));
+        ImageUtils.get().getInfo(info.path(), this::setImageInfo);
     }
 
     public void setImageInfo(ImageInfo info) {

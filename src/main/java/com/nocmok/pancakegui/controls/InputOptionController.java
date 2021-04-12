@@ -20,6 +20,7 @@ public class InputOptionController extends OptionControllerBase<String> {
     @FXML
     private TextField textField;
 
+    @FXML
     private Parent root;
 
     @Override
@@ -42,7 +43,13 @@ public class InputOptionController extends OptionControllerBase<String> {
 
     }
 
-    public void setOptionName(String name){
+    public InputOptionController setOptionName(String name) {
         optionName.setText(name);
+        return this;
+    }
+
+    public InputOptionController setDefault(String value) {
+        textField.setText(value);
+        return this;
     }
 }

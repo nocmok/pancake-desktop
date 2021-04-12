@@ -5,12 +5,11 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
-public class ToolbarController extends ControllerBase implements Initializable {
+public class ToolbarController extends ControllerBase {
 
     public static ToolbarController getNew() {
         return ControllerBase.getNew("toolbar_layout.fxml");

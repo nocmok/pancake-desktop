@@ -19,7 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
-public class ImageSourcesController extends ControllerBase implements Initializable {
+public class ImageSourcesController extends ControllerBase {
 
     public static ImageSourcesController getNew() {
         return ControllerBase.getNew("image_sources_layout.fxml");

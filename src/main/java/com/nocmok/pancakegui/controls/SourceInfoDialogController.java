@@ -14,7 +14,6 @@ import com.nocmok.pancakegui.pojo.ImageInfo;
 import com.nocmok.pancakegui.utils.ImageUtils;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,7 +26,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class SourceInfoDialogController extends ControllerBase implements Initializable {
+public class SourceInfoDialogController extends ControllerBase {
 
     public static SourceInfoDialogController getNew() {
         return ControllerBase.getNew("source_info_dialog_layout.fxml");
