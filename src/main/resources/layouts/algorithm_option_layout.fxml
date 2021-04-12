@@ -1,0 +1,25 @@
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.Group?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" alignment="CENTER" fx:controller="com.nocmok.pancakegui.controls.AlgorithmOptionController" fillWidth="true">
+    <fx:include fx:id="algo" source="drop_down_option_layout.fxml" />
+    <fx:include fx:id="filter" source="drop_down_option_layout.fxml" visible="false" managed="false" />
+    <fx:include fx:id="cutoff" source="input_option_layout.fxml" visible="false" managed="false" />
+    <fx:include fx:id="rWeight" source="input_option_layout.fxml" visible="false" managed="false" />
+    <fx:include fx:id="gWeight" source="input_option_layout.fxml" visible="false" managed="false" />
+    <fx:include fx:id="bWeight" source="input_option_layout.fxml" visible="false" managed="false" />
+</VBox>
