@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.nocmok.pancake.Spectrum;
+import com.nocmok.pancakegui.PancakeApp;
 import com.nocmok.pancakegui.pojo.ImageInfo;
 import com.nocmok.pancakegui.utils.ImageUtils;
 
@@ -70,6 +71,7 @@ public class SourceInfoDialogController extends ControllerBase {
         dialog.setScene(new Scene(root));
         dialog.setResizable(false);
         dialog.initStyle(StageStyle.UTILITY);
+        dialog.initOwner(PancakeApp.app().primaryStage());
         dialog.initModality(Modality.WINDOW_MODAL);
         ImageUtils.get().getInfo(imgFile, this::setInfo);
         dialog.showAndWait();
