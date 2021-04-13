@@ -49,7 +49,6 @@ public class ImageUtils {
         }
     }
 
-    /** TODO (image format detection) */
     public ImageInfo getInfo(File imgFile) {
         ImageInfo ii = imageInfoCache.get(imgFile);
         if (ii != null) {
@@ -57,8 +56,8 @@ public class ImageUtils {
         }
         Image overview = getImageThumbnail(imgFile, 100, 100);
         PancakeDataset dataset = Pancake.open(imgFile, Pancake.ACCESS_READONLY);
-        ii = new ImageInfo(overview, dataset.bands().get(0).getXSize(), dataset.bands().get(0).getYSize(), imgFile,
-                dataset.bands().size(), "unknown");
+        ii = new ImageInfo(overview, dataset.xSize(), dataset.ySize(), imgFile, dataset.bands().size(),
+                dataset.formatString());
         imageInfoCache.add(imgFile, ii);
         return ii;
     }
