@@ -25,7 +25,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -99,7 +98,7 @@ public class PansharpDialogController extends ControllerBase {
         controls.put(OUTPUT_DATATYPE, DropDownOptionController.<String>getNew().setOptionName("output datatype")
                 .setOptions(dataTypes.keySet()).setDefault(uint8));
         controls.put(OUTPUT_FORMAT, DropDownOptionController.<Formats>getNew().setOptionName("output format")
-                .setOptions(List.of(Formats.values())).setDefault(Formats.GTiff));
+                .setOptions(Formats.supportedFormats()).setDefault(Formats.GTiff));
         controls.put(RESAMPLER, DropDownOptionController.<String>getNew().setOptionName("resampler")
                 .setOptions(resamplers.keySet()).setDefault(NEAREST));
         controls.put(COMPRESSION, DropDownOptionController.<Compression>getNew().setOptionName("compression")
