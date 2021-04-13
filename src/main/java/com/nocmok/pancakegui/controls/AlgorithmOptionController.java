@@ -72,7 +72,7 @@ public class AlgorithmOptionController extends OptionControllerBase<Fusor> {
         algoController.setOnItemSelectedListener((s) -> {
             selectFusor(s);
         });
-        Function<String, Boolean> validator = new Function<String, Boolean>() {
+        Function<String, Boolean> doubleValidator = new Function<String, Boolean>() {
             @Override
             public Boolean apply(String s) {
                 if (s == null) {
@@ -86,11 +86,25 @@ public class AlgorithmOptionController extends OptionControllerBase<Fusor> {
                 }
             }
         };
-        rWeightController.setOptionName("R weight").setDefault("1").setValidator(validator);
-        gWeightController.setOptionName("G weight").setDefault("1").setValidator(validator);
-        bWeightController.setOptionName("B weight").setDefault("1").setValidator(validator);
+        Function<String, Boolean> integerValidator = new Function<String, Boolean>() {
+            @Override
+            public Boolean apply(String s) {
+                if (s == null) {
+                    return false;
+                }
+                try {
+                    int value = Integer.parseInt(s);
+                    return (value % 2 == 1) && (value >= 3) && (value <= 100);
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
+        };
+        rWeightController.setOptionName("R weight").setDefault("1").setValidator(doubleValidator);
+        gWeightController.setOptionName("G weight").setDefault("1").setValidator(doubleValidator);
+        bWeightController.setOptionName("B weight").setDefault("1").setValidator(doubleValidator);
         filterController.setOptionName("high pass filter").setOptions(filters).setDefault(GAUSSIAN);
-        cutoffController.setOptionName("cutoff frequency");
+        cutoffController.setOptionName("kernel size").setDefault("3").setValidator(integerValidator);
 
         setDefault(BROVEY);
     }
@@ -137,16 +151,15 @@ public class AlgorithmOptionController extends OptionControllerBase<Fusor> {
             double gWeight = Double.parseDouble(gWeightController.getSelected());
             double bWeight = Double.parseDouble(bWeightController.getSelected());
             return new Brovey(rWeight, gWeight, bWeight);
-        /** TODO */
         case HPFM:
-            double cutoff = Double.parseDouble(cutoffController.getSelected());
+            int size = Integer.parseInt(cutoffController.getSelected());
             Filter2D filter = null;
             switch (filterController.getSelected()) {
             case BOXCAR:
-                filter = new BoxHP(9);
+                filter = BoxHP.ofSize(size);
                 break;
             case GAUSSIAN:
-                filter = new GaussianHP(3f);
+                filter = GaussianHP.ofSize(size);
                 break;
             }
             if (filter == null) {
