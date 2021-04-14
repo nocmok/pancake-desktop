@@ -14,7 +14,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" fx:controller="com.nocmok.pancakegui.controls.DropDownOptionController">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" styleClass="pnk-cloud" fx:controller="com.nocmok.pancakegui.controls.DropDownOptionController">
+    <padding>
+        <Insets left="20" right="20" top="20" bottom="20" />
+    </padding>
     <Label fx:id="optionName" GridPane.columnIndex="0" GridPane.rowIndex="0"></Label>
     <ComboBox fx:id="dropdown" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="100"></ComboBox>
     <columnConstraints>

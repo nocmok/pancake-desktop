@@ -65,9 +65,25 @@ public class ImageSourcesController extends ControllerBase {
 
         sourceListVBox.getChildren().add(newSource.root());
         newSource.setOnEditListener(() -> edit(newSource));
-        newSource.setOnRemoveListener(() -> remove(newSource));
+
+        newSource.setOnRemoveListener(() -> {
+            PancakeApp.app().session().removeSource(newSource.getSourceInfo());
+            remove(newSource);
+        });
+        
         newSource.setOnSelectedListener(() -> {
             getOnItemSelectedListener().accept(sourceInfo);
+        });
+    }
+
+    public void addItem(ImageSourceController item) {
+        item.root().setOnMouseClicked((e) -> selectItem(item));
+
+        sourceListVBox.getChildren().add(item.root());
+        item.setOnEditListener(() -> edit(item));
+        item.setOnRemoveListener(() -> remove(item));
+        item.setOnSelectedListener(() -> {
+            getOnItemSelectedListener().accept(item.getSourceInfo());
         });
     }
 
@@ -88,7 +104,7 @@ public class ImageSourcesController extends ControllerBase {
     }
 
     private void remove(ImageSourceController source) {
-        PancakeApp.app().session().removeSource(source.getSourceInfo());
+
         items.remove(source.getSourceInfo());
         source.root().setManaged(false);
         source.root().setVisible(false);

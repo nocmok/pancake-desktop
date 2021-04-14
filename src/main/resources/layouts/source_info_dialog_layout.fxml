@@ -15,26 +15,36 @@
 <?import javafx.scene.control.ScrollPane?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/style.css" styleClass="pnk-dialog" fx:controller="com.nocmok.pancakegui.controls.SourceInfoDialogController">
+    <padding>
+        <Insets left="20" right="20" top="0" bottom="0" />
+    </padding>
     <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Source</Label>
-    <HBox GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <ImageView fx:id="imageOverview" fitWidth="60" fitHeight="60" styleClass="image-overview"></ImageView>
-        <VBox spacing="5">
+    <HBox GridPane.columnIndex="0" GridPane.rowIndex="1" alignment="CENTER_LEFT" spacing="20">
+        <ImageView fx:id="imageOverview" fitWidth="60" fitHeight="60" styleClass="image-overview">
+            <HBox.margin>
+                <Insets left="30" right="0"/>
+            </HBox.margin>
+        </ImageView>
+        <VBox alignment="CENTER_LEFT">
+            <HBox.margin>
+                <Insets left="10" right="0"/>
+            </HBox.margin>
             <Label fx:id="imageName"></Label>
             <Label fx:id="imageResolution"></Label>
             <Label fx:id="imageFormat"></Label>
         </VBox>
     </HBox>
-    <ScrollPane hbarPolicy="NEVER" GridPane.columnIndex="0" GridPane.rowIndex="2" fitToWidth="true">
-        <VBox fx:id="bandList"></VBox>
+    <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER" GridPane.columnIndex="0" GridPane.rowIndex="2" fitToWidth="true">
+        <VBox fx:id="bandList" fillWidth="true" spacing="10"></VBox>
     </ScrollPane>
     <Button fx:id="addButton" styleClass="pnk-button" GridPane.columnIndex="0" GridPane.rowIndex="3">Save</Button>
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" halignment="CENTER" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints vgrow="NEVER" fillHeight="true" prefHeight="20" />
-        <RowConstraints vgrow="NEVER" fillHeight="true" prefHeight="100" />
+        <RowConstraints vgrow="NEVER" fillHeight="true" minHeight="10" />
+        <RowConstraints vgrow="NEVER" fillHeight="true" minHeight="120" />
         <RowConstraints vgrow="SOMETIMES" fillHeight="true" />
-        <RowConstraints vgrow="NEVER" fillHeight="true" prefHeight="60" />
+        <RowConstraints vgrow="NEVER" fillHeight="true" minHeight="60" />
     </rowConstraints>
 </GridPane>

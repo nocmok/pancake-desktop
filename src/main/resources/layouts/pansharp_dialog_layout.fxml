@@ -15,17 +15,20 @@
 <?import javafx.scene.control.ScrollPane?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/style.css" styleClass="pnk-dialog" fx:controller="com.nocmok.pancakegui.controls.PansharpDialogController">
+    <padding>
+        <Insets left="20" right="20" top="0" bottom="0" />
+    </padding>
     <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Configuration</Label>
-    <ScrollPane hbarPolicy="NEVER" GridPane.columnIndex="0" GridPane.rowIndex="1" fitToWidth="true" >
-        <VBox fx:id="optionsVBox" fillWidth="true"></VBox>
+    <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER" GridPane.columnIndex="0" GridPane.rowIndex="1" fitToWidth="true" >
+        <VBox fx:id="optionsVBox" fillWidth="true" spacing="10"></VBox>
     </ScrollPane>
     <Button fx:id="pansharpButton" styleClass="pnk-button" GridPane.columnIndex="0" GridPane.rowIndex="2">Run</Button>
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" halignment="CENTER" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints vgrow="NEVER" fillHeight="true" prefHeight="20" />
+        <RowConstraints vgrow="NEVER" fillHeight="true" minHeight="40" />
         <RowConstraints vgrow="SOMETIMES" fillHeight="true" />
-        <RowConstraints vgrow="NEVER" fillHeight="true" prefHeight="60" />
+        <RowConstraints vgrow="NEVER" fillHeight="true" minHeight="60" />
     </rowConstraints>
 </GridPane>

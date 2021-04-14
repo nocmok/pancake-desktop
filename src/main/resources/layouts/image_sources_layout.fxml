@@ -19,6 +19,9 @@
         Sources
     </Label>
     <ScrollPane GridPane.columnIndex="0" GridPane.rowIndex="1" hbarPolicy="NEVER" vbarPolicy="NEVER" fitToWidth="true">
+        <GridPane.margin>
+            <Insets left="10" right="10" top="0" bottom="0"/>
+        </GridPane.margin>
         <VBox fx:id="sourceListVBox" spacing="5" fillWidth="true"></VBox>
     </ScrollPane>
     <Button fx:id="addSourceButton" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="pnk-button">

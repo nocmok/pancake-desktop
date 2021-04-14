@@ -16,22 +16,25 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" fx:controller="com.nocmok.pancakegui.controls.ImageSourceController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" styleClass="pnk-cloud" fx:controller="com.nocmok.pancakegui.controls.ImageSourceController">
+    <padding>
+        <Insets left="20" right="20" top="20" bottom="20"/>
+    </padding>
     <left>
-        <ImageView fx:id="imageOverview" fitWidth="60" fitHeight="60" styleClass="image-overview"></ImageView>
+        <ImageView fx:id="imageOverview" fitWidth="60" fitHeight="60" styleClass="image-overview" BorderPane.alignment="CENTER"></ImageView>
     </left>
     <center>
-        <VBox alignment="CENTER_LEFT">
+        <VBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets left="10" />
             </BorderPane.margin>
-            <Label fx:id="imageName">path</Label>
-            <Label fx:id="imageResolution">resolution</Label>
-            <Label fx:id="imagePhotometry">photometry</Label>
+            <Label fx:id="imageName" style="-fx-background-color: transparent">path</Label>
+            <Label fx:id="imageResolution" style="-fx-background-color: transparent">resolution</Label>
+            <Label fx:id="imagePhotometry" style="-fx-background-color: transparent">photometry</Label>
         </VBox>
     </center>
     <right>
-        <MenuButton fx:id="moreButton" styleClass="more-button">
+        <MenuButton fx:id="moreButton" styleClass="more-button" BorderPane.alignment="CENTER"> 
             <items>
                 <MenuItem fx:id="editItem" text="Edit"></MenuItem>
                 <MenuItem fx:id="removeItem" text="Remove"></MenuItem>

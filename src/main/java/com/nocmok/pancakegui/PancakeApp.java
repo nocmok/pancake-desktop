@@ -9,6 +9,7 @@ import com.nocmok.pancake.Pancake;
 import com.nocmok.pancakegui.scenes.MainScene;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class PancakeApp extends Application {
@@ -40,6 +41,7 @@ public class PancakeApp extends Application {
         primaryStage.setHeight(600);
         primaryStage.setWidth(800);
         primaryStage.setTitle("Pancake");
+        primaryStage.getIcons().add(new Image(getImage("pancakes.png").toString()));
         primaryStage.setScene(new MainScene());
         primaryStage.centerOnScreen();
 
@@ -73,5 +75,9 @@ public class PancakeApp extends Application {
 
     public static URL getLayout(String name) {
         return PancakeApp.class.getClassLoader().getResource("layouts/" + name);
+    }
+
+    public static URL getImage(String name) {
+        return PancakeApp.class.getClassLoader().getResource("img/" + name);
     }
 }

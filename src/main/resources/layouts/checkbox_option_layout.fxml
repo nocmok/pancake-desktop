@@ -14,12 +14,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.CheckBox?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" fx:controller="com.nocmok.pancakegui.controls.CheckBoxOptionController">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" styleClass="pnk-cloud" fx:controller="com.nocmok.pancakegui.controls.CheckBoxOptionController">
+    <padding>
+        <Insets left="20" right="20" top="20" bottom="20" />
+    </padding>
     <Label fx:id="optionName" GridPane.columnIndex="0" GridPane.rowIndex="0"></Label>
-    <CheckBox fx:id="checkBox" styleClass="pnk-checkbox" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="100"></CheckBox>
+    <CheckBox fx:id="checkBox" styleClass="pnk-checkbox" GridPane.columnIndex="1" GridPane.rowIndex="0"></CheckBox>
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" halignment="LEFT" />
-        <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" halignment="RIGHT" />
+        <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" percentWidth="50" halignment="LEFT" />
+        <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" percentWidth="50" halignment="CENTER" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints vgrow="SOMETIMES" fillHeight="true" prefHeight="20" valignment="CENTER" />

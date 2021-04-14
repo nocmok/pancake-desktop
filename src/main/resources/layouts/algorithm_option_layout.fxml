@@ -15,7 +15,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.Group?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" alignment="CENTER" fx:controller="com.nocmok.pancakegui.controls.AlgorithmOptionController" fillWidth="true">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" alignment="CENTER" fillWidth="true" spacing="10" fx:controller="com.nocmok.pancakegui.controls.AlgorithmOptionController">
     <fx:include fx:id="algo" source="drop_down_option_layout.fxml" />
     <fx:include fx:id="filter" source="drop_down_option_layout.fxml" visible="false" managed="false" />
     <fx:include fx:id="cutoff" source="input_option_layout.fxml" visible="false" managed="false" />

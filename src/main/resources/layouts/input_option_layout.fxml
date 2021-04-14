@@ -15,9 +15,12 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" fx:controller="com.nocmok.pancakegui.controls.InputOptionController">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="root" stylesheets="@../css/style.css" styleClass="pnk-cloud" fx:controller="com.nocmok.pancakegui.controls.InputOptionController">
+    <padding>
+        <Insets left="20" right="20" top="20" bottom="20" />
+    </padding>
     <Label fx:id="optionName" GridPane.columnIndex="0" GridPane.rowIndex="0"></Label>
-    <TextField fx:id="textField" styleClass="pnk-input" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="100"></TextField>
+    <TextField fx:id="textField" styleClass="pnk-input" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="0" maxWidth="50"></TextField>
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" halignment="LEFT" />
         <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" halignment="RIGHT" />

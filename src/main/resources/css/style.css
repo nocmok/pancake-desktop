@@ -1,5 +1,8 @@
-{
+ {
   rusty-green: #0ecb9d;
+  wet-rusty-green: #01e1ab;
+  cloud-gray: #f4f4f4;
+  rainy-gray: #e5e5e5;
 }
 
 @font-face {
@@ -17,6 +20,13 @@
   -fx-text-fill: black;
 }
 
+* {
+  -fx-font-family: "Roboto Light";
+  font-family: "Roboto Light";
+  -fx-font-size: 14;
+  font-size: 14;
+}
+
 .pnk-button {
   -fx-alignment: center;
   -fx-background-color: rusty-green;
@@ -29,9 +39,14 @@
   -fx-pref-height: 35;
 }
 
+.pnk-button:hover {
+  -fx-background-color: wet-rusty-green;
+  background-color: wet-rusty-green;
+}
+
 .more-button {
-  -fx-background-image: url('../img/more-gray.png');
-  background-image: url('../img/more-gray.png');
+  -fx-background-image: url("../img/more-gray.png");
+  background-image: url("../img/more-gray.png");
   -fx-pref-width: 20;
   -fx-pref-height: 20;
   -fx-background-size: 20 20;
@@ -40,9 +55,17 @@
   -fx-background-repeat: no-repeat;
 }
 
+.more-button > .arrow-button {
+  -fx-padding: 0;
+}
+
+.more-button > .arrow-button > .arrow {
+  -fx-padding: 0;
+}
+
 .play-button {
-  -fx-background-image: url('../img/play.png');
-  background-image: url('../img/play.png');
+  -fx-background-image: url("../img/play.png");
+  background-image: url("../img/play.png");
   -fx-pref-width: 20;
   -fx-pref-height: 20;
   -fx-background-size: 20 20;
@@ -52,8 +75,8 @@
 }
 
 .zoomin-button {
-  -fx-background-image: url('../img/zoom-in.png');
-  background-image: url('../img/zoom-in.png');
+  -fx-background-image: url("../img/zoom-in.png");
+  background-image: url("../img/zoom-in.png");
   -fx-pref-width: 20;
   -fx-pref-height: 20;
   -fx-background-size: 20 20;
@@ -63,8 +86,8 @@
 }
 
 .zoomout-button {
-  -fx-background-image: url('../img/zoom-out.png');
-  background-image: url('../img/zoom-out.png');
+  -fx-background-image: url("../img/zoom-out.png");
+  background-image: url("../img/zoom-out.png");
   -fx-pref-width: 20;
   -fx-pref-height: 20;
   -fx-background-size: 20 20;
@@ -73,28 +96,114 @@
   -fx-background-repeat: no-repeat;
 }
 
+.pnk-cloud {
+  -fx-background-color: cloud-gray;
+  background-color: cloud-gray;
+  -fx-border-radius: 10;
+  border-radius: 10;
+  -fx-background-radius: 10;
+}
+
+.pnk-cloud-selected {
+  -fx-background-color: rainy-gray;
+  -fx-border-radius: 20;
+}
+
 .image-overview {
   -fx-fit-width: 60;
   -fx-fit-height: 60;
 }
 
 .pnk-dialog {
-  -fx-pref-width: 300;
-  -fx-pref-height: 400;
+  -fx-pref-width: 350;
+  -fx-pref-height: 450;
 }
 
 .pnk-dropdown {
-
 }
 
 .pnk-input {
-
 }
 
-.pnk-input-light {
-  
+.pnk-input-warning {
+  -fx-border-color: red;
 }
 
 .pnk-checkbox {
-  
+}
+
+.pnk-progress-dialog {
+  -fx-pref-width: 400;
+  -fx-pref-height: 150;
+}
+
+.pnk-progress-bar {
+  -fx-pref-height: 25;
+}
+
+.pnk-progress-bar > .bar {
+  -fx-background-color: rusty-green;
+  background-color: rusty-green;
+}
+
+.scroll-pane > .viewport {
+  -fx-background-color: transparent;
+}
+
+.scroll-pane {
+  -fx-background-color: white;
+  background-color: white;
+  -fx-border-width: 0;
+  border-width: 0;
+}
+
+.vbox {
+  -fx-background-color: white;
+  background-color: white;
+}
+
+PanningTiledPane {
+  -fx-background-color: cloud-gray;
+  background-color: cloud-gray;
+}
+
+ClipPane {
+  -fx-border-radius: 20;
+  border-radius: 20;
+  -fx-background-radius: 20;
+}
+
+.combo-box {
+  -fx-background-color: rainy-gray;
+  -fx-background: rainy-gray;
+  -fx-background-radius: 5;
+  -fx-padding: 0;
+}
+
+.combo-box .list-cell {
+  -fx-background: cloud-gray;
+  -fx-background-color: cloud-gray;
+  -fx-text-fill: black;
+}
+
+.combo-box .list-cell:hover {
+  -fx-background: rainy-gray;
+  -fx-background-color: rainy-gray;
+}
+
+.combo-box-popup .list-view {
+  -fx-background-insets: 0, 1;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 8, 0, 0, 0);
+}
+
+.combo-box-base:focused {
+  -fx-focus-color: transparent;
+}
+
+TextField {
+  -fx-focus-color: transparent;
+}
+
+CheckBox {
+  -fx-focus-color: transparent;
 }
