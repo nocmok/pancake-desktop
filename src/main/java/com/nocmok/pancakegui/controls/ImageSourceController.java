@@ -57,6 +57,9 @@ public class ImageSourceController extends ControllerBase {
     private Runnable onRemoveListener = () -> {
     };
 
+    private Runnable onSelectedListener = () -> {
+    };
+
     public ImageSourceController() {
     }
 
@@ -90,6 +93,11 @@ public class ImageSourceController extends ControllerBase {
         });
     }
 
+    public void setOnSelectedListener(Runnable listener) {
+        this.onSelectedListener = Optional.ofNullable(listener).orElse(() -> {
+        });
+    }
+
     private String mappingToString(Map<Integer, Spectrum> mapping) {
         StringBuilder photometry = new StringBuilder();
         Integer[] bands = mapping.keySet().toArray(new Integer[0]);
@@ -117,6 +125,21 @@ public class ImageSourceController extends ControllerBase {
 
     public void setOverview(Image overview) {
         imageOverview.setImage(overview);
+    }
+
+    public void select() {
+        if (root.getStyleClass().size() > 1) {
+            root.getStyleClass().remove(root.getStyleClass().size() - 1);
+        }
+        root.getStyleClass().add("pnk-cloud-selected");
+        onSelectedListener.run();
+    }
+
+    public void unselect() {
+        if (root.getStyleClass().size() > 1) {
+            root.getStyleClass().remove(root.getStyleClass().size() - 1);
+        }
+        root.getStyleClass().add("pnk-cloud");
     }
 
     public SourceInfo getSourceInfo() {

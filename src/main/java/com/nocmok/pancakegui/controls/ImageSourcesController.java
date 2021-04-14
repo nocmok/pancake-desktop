@@ -2,8 +2,11 @@ package com.nocmok.pancakegui.controls;
 
 import java.io.File;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import com.nocmok.pancake.Spectrum;
 import com.nocmok.pancakegui.PancakeApp;
@@ -36,21 +39,36 @@ public class ImageSourcesController extends ControllerBase {
     @FXML
     private Button addSourceButton;
 
+    @FXML
     private Parent root;
 
-    public ImageSourcesController() {
+    private ImageSourceController selectedItem;
 
+    private Map<SourceInfo, ImageSourceController> items;
+
+    private Consumer<SourceInfo> onItemSelectedListener = (i) -> {
+    };
+
+    public ImageSourcesController() {
+        items = new HashMap<>();
     }
 
     public void addImageSource(SourceInfo sourceInfo) {
         ImageSourceController newSource = ImageSourceController.getNew();
+        items.put(sourceInfo, newSource);
         if (newSource == null) {
             return;
         }
+
         newSource.setSourceInfo(sourceInfo);
+        newSource.root().setOnMouseClicked((e) -> selectItem(newSource));
+
         sourceListVBox.getChildren().add(newSource.root());
         newSource.setOnEditListener(() -> edit(newSource));
         newSource.setOnRemoveListener(() -> remove(newSource));
+        newSource.setOnSelectedListener(() -> {
+            getOnItemSelectedListener().accept(sourceInfo);
+        });
     }
 
     private void edit(ImageSourceController source) {
@@ -71,13 +89,43 @@ public class ImageSourcesController extends ControllerBase {
 
     private void remove(ImageSourceController source) {
         PancakeApp.app().session().removeSource(source.getSourceInfo());
+        items.remove(source.getSourceInfo());
         source.root().setManaged(false);
         source.root().setVisible(false);
         sourceListVBox.getChildren().remove(source.root());
     }
 
+    public void setOnItemSelectedListener(Consumer<SourceInfo> listener) {
+        this.onItemSelectedListener = Optional.ofNullable(listener).orElse((i) -> {
+        });
+    }
+
+    public Consumer<SourceInfo> getOnItemSelectedListener() {
+        return this.onItemSelectedListener;
+    }
+
+    public void selectItem(ImageSourceController item) {
+        if (item == null) {
+            return;
+        }
+        item.select();
+        if (selectedItem != null) {
+            selectedItem.unselect();
+        }
+        selectedItem = item;
+    }
+
+    public void selectItem(SourceInfo sourceInfo) {
+        ImageSourceController item = items.get(sourceInfo);
+        selectItem(item);
+    }
+
     public void removeImageSource(SourceInfo info) {
-        throw new UnsupportedOperationException("not implemented");
+        ImageSourceController item = items.get(info);
+        if (item == null) {
+            return;
+        }
+        remove(item);
     }
 
     @Override

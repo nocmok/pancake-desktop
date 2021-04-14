@@ -68,18 +68,24 @@ public class MainSceneController extends ControllerBase {
 
         int gridCols = 2;
         int gridRows = 2;
+
         // int width = 500;
         // int height = 500;
         // int cellXSize = (width + gridCols - 1) / gridCols;
         // int cellYSize = (height + gridRows - 1) / gridRows;
-        int cellXSize = 200;
-        int cellYSize = 200;
-        
+
+        int cellXSize = 500;
+        int cellYSize = 500;
+
         int cellSize = Integer.max(cellXSize, cellYSize);
 
         this.tileFactory = new TileFactory(gridCols, gridRows, cellSize);
         this.imgViewer = new PanningTiledPane(cellSize, cellSize, tileFactory, 0);
         imageExplorer.addChild(imgViewer);
+
+        imageSourcesController.setOnItemSelectedListener((sourceInfo) -> {
+            setImage(sourceInfo.path());
+        });
 
         toolbarController.setOnPlayButtonClickedHandler(this::pansharp);
         toolbarController.setOnZoomInButtonClickedHandler(this::zoomIn);
@@ -134,6 +140,7 @@ public class MainSceneController extends ControllerBase {
                 datasets.add(result);
                 Platform.runLater(() -> {
                     progress.closeDialog();
+                    setImage(dstFile);
                 });
             } catch (RuntimeException e) {
                 e.printStackTrace();
