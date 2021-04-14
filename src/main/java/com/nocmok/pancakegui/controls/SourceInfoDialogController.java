@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Map.Entry;
 
 import com.nocmok.pancake.Spectrum;
 import com.nocmok.pancakegui.PancakeApp;
@@ -21,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -75,6 +75,7 @@ public class SourceInfoDialogController extends ControllerBase {
         dialog.initOwner(PancakeApp.app().primaryStage());
         dialog.initModality(Modality.WINDOW_MODAL);
         ImageUtils.get().getInfo(imgFile, this::setInfo);
+        ImageUtils.get().getImageThumbnail(imgFile, 100, 100, this::setOverview);
         dialog.showAndWait();
         return mapping;
     }
@@ -107,10 +108,13 @@ public class SourceInfoDialogController extends ControllerBase {
         stage.close();
     }
 
+    private void setOverview(Image image) {
+        imageOverview.setImage(image);
+    }
+
     private void setInfo(ImageInfo info) {
         bandList.getChildren().clear();
 
-        imageOverview.setImage(info.getOverview());
         imageName.setText(info.getPath().getName());
         imageResolution.setText(info.getXsize() + "x" + info.getYsize());
         imageFormat.setText(info.getImageFormat());

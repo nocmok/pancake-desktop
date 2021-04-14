@@ -20,12 +20,14 @@ import com.nocmok.pancake.PancakeProgressListener;
 
 import com.nocmok.pancakegui.PancakeApp;
 import com.nocmok.pancakegui.Session;
+import com.nocmok.pancakegui.controls.imgviewer.TileFactory;
+import com.nocmok.pancakegui.controls.imgviewer.PanningTiledPane;
 import com.nocmok.pancakegui.pojo.SourceInfo;
+import com.nocmok.pancakegui.utils.ImageUtils;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
@@ -43,7 +45,7 @@ public class MainSceneController extends ControllerBase {
     private ImageSourcesController imageSourcesController;
 
     @FXML
-    private ImageExplorer imageExplorer;
+    private ClipPane imageExplorer;
 
     @FXML
     private HBox toolbar;
@@ -51,20 +53,37 @@ public class MainSceneController extends ControllerBase {
     @FXML
     private ToolbarController toolbarController;
 
+    @FXML
     private Parent root;
 
     private Session session;
+
+    private TileFactory tileFactory;
+
+    private PanningTiledPane imgViewer;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         session = PancakeApp.app().session();
 
-        imageExplorer.setPlaceholder(new Label("no image to display"));
+        int gridCols = 2;
+        int gridRows = 2;
+        // int width = 500;
+        // int height = 500;
+        // int cellXSize = (width + gridCols - 1) / gridCols;
+        // int cellYSize = (height + gridRows - 1) / gridRows;
+        int cellXSize = 200;
+        int cellYSize = 200;
+        
+        int cellSize = Integer.max(cellXSize, cellYSize);
+
+        this.tileFactory = new TileFactory(gridCols, gridRows, cellSize);
+        this.imgViewer = new PanningTiledPane(cellSize, cellSize, tileFactory, 0);
+        imageExplorer.addChild(imgViewer);
 
         toolbarController.setOnPlayButtonClickedHandler(this::pansharp);
         toolbarController.setOnZoomInButtonClickedHandler(this::zoomIn);
         toolbarController.setOnZoomOutButtonClickedHandler(this::zoomOut);
-
     }
 
     public void pansharp() {
@@ -136,11 +155,26 @@ public class MainSceneController extends ControllerBase {
     }
 
     public void zoomIn() {
-
+        if (tileFactory.getImage() == null) {
+            return;
+        }
+        tileFactory.setZoom(tileFactory.getZoom() + 1d);
+        imgViewer.refresh();
     }
 
     public void zoomOut() {
+        if (tileFactory.getImage() == null) {
+            return;
+        }
+        tileFactory.setZoom(tileFactory.getZoom() - 1d);
+        imgViewer.refresh();
+    }
 
+    public void setImage(File imageFile) {
+        ImageUtils.get().getInfo(imageFile, (info) -> {
+            this.tileFactory.setImage(info);
+            imgViewer.refresh();
+        });
     }
 
     @Override

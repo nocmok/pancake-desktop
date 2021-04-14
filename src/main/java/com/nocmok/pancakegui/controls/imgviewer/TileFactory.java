@@ -64,23 +64,6 @@ public class TileFactory implements PanningTiledPane.ImageSupplier {
         return size;
     }
 
-    // private int clampX(int x0) {
-    // if (x0 + imgTileSize > imgInfo.getXsize()) {
-    // return Integer.max(0, imgInfo.getXsize() - x0);
-    // }
-    // if(x0 < 0){
-    // return
-    // }
-    // return imgTileSize;
-    // }
-
-    // private int clampY(int y0) {
-    // if (y0 + imgTileSize > imgInfo.getYsize()) {
-    // return Integer.max(0, imgInfo.getYsize() - y0);
-    // }
-    // return imgTileSize;
-    // }
-
     private Image getPlaceHolder(int width, int height) {
         Label label = new Label("X");
         label.setPrefSize(width, height);

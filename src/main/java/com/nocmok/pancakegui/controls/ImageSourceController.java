@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class ImageSourceController extends ControllerBase {
@@ -107,11 +108,15 @@ public class ImageSourceController extends ControllerBase {
         imageName.setText(info.path().getName());
         imagePhotometry.setText(mappingToString(info.mapping()));
         ImageUtils.get().getInfo(info.path(), this::setImageInfo);
+        ImageUtils.get().getImageThumbnail(info.path(), 100, 100, this::setOverview);
     }
 
     public void setImageInfo(ImageInfo info) {
         imageResolution.setText(info.getXsize() + "x" + info.getYsize());
-        imageOverview.setImage(info.getOverview());
+    }
+
+    public void setOverview(Image overview) {
+        imageOverview.setImage(overview);
     }
 
     public SourceInfo getSourceInfo() {
