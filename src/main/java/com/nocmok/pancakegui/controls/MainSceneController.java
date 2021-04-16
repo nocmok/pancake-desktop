@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +94,9 @@ public class MainSceneController extends ControllerBase {
     }
 
     public void pansharp() {
+        List<SourceInfo> ds = session.minifyDataset();
+        
+
         FileChooser fChooser = new FileChooser();
         File dstFile = fChooser.showSaveDialog(PancakeApp.app().primaryStage());
         if (dstFile == null) {
@@ -115,7 +119,6 @@ public class MainSceneController extends ControllerBase {
         progress.runDialog();
 
         PancakeApp.app().worker().submit(() -> {
-            List<SourceInfo> ds = session.minifyDataset();
             Map<Spectrum, PancakeBand> source = new EnumMap<>(Spectrum.class);
             List<PancakeDataset> datasets = new ArrayList<>();
             try {
@@ -140,7 +143,14 @@ public class MainSceneController extends ControllerBase {
                 datasets.add(result);
                 Platform.runLater(() -> {
                     progress.closeDialog();
-                    setImage(dstFile);
+
+                    ImageSourceController newSource = ImageSourceController.getNew();
+                    newSource.setSourceInfo(new SourceInfo(dstFile, Collections.emptyMap()));
+                    ImageUtils.get().getInfo(dstFile, newSource::setImageInfo);
+                    ImageUtils.get().getImageThumbnail(dstFile, 100, 100, newSource::setOverview);
+                    imageSourcesController.addItem(newSource);
+
+                    imageSourcesController.selectItem(newSource);
                 });
             } catch (RuntimeException e) {
                 e.printStackTrace();

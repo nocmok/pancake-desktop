@@ -51,6 +51,9 @@ public class AlgorithmOptionController extends OptionControllerBase<Fusor> {
     private InputOptionController bWeightController;
 
     @FXML
+    private InputOptionController niWeightController;
+
+    @FXML
     private InputOptionController cutoffController;
 
     @FXML
@@ -66,6 +69,7 @@ public class AlgorithmOptionController extends OptionControllerBase<Fusor> {
         controls.add(rWeightController);
         controls.add(gWeightController);
         controls.add(bWeightController);
+        controls.add(niWeightController);
         controls.add(cutoffController);
 
         algoController.setOptionName("algorithm").setOptions(fusors).setDefault(BROVEY);
@@ -103,6 +107,7 @@ public class AlgorithmOptionController extends OptionControllerBase<Fusor> {
         rWeightController.setOptionName("R weight").setDefault("1").setValidator(doubleValidator);
         gWeightController.setOptionName("G weight").setDefault("1").setValidator(doubleValidator);
         bWeightController.setOptionName("B weight").setDefault("1").setValidator(doubleValidator);
+        niWeightController.setOptionName("NI weight").setDefault("0").setValidator(doubleValidator);
         filterController.setOptionName("high pass filter").setOptions(filters).setDefault(GAUSSIAN);
         cutoffController.setOptionName("kernel size").setDefault("3").setValidator(integerValidator);
 
@@ -116,6 +121,7 @@ public class AlgorithmOptionController extends OptionControllerBase<Fusor> {
             show(rWeightController.root());
             show(gWeightController.root());
             show(bWeightController.root());
+            show(niWeightController.root());
             break;
         case HPFM:
             show(filterController.root());
@@ -141,6 +147,7 @@ public class AlgorithmOptionController extends OptionControllerBase<Fusor> {
         hide(rWeightController.root());
         hide(gWeightController.root());
         hide(bWeightController.root());
+        hide(niWeightController.root());
         hide(cutoffController.root());
     }
 
@@ -150,7 +157,8 @@ public class AlgorithmOptionController extends OptionControllerBase<Fusor> {
             double rWeight = Double.parseDouble(rWeightController.getSelected());
             double gWeight = Double.parseDouble(gWeightController.getSelected());
             double bWeight = Double.parseDouble(bWeightController.getSelected());
-            return new Brovey(rWeight, gWeight, bWeight);
+            double niWeight = Double.parseDouble(niWeightController.getSelected());
+            return new Brovey(rWeight, gWeight, bWeight, niWeight);
         case HPFM:
             int size = Integer.parseInt(cutoffController.getSelected());
             Filter2D filter = null;

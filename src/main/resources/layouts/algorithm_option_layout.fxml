@@ -22,4 +22,5 @@
     <fx:include fx:id="rWeight" source="input_option_layout.fxml" visible="false" managed="false" />
     <fx:include fx:id="gWeight" source="input_option_layout.fxml" visible="false" managed="false" />
     <fx:include fx:id="bWeight" source="input_option_layout.fxml" visible="false" managed="false" />
+    <fx:include fx:id="niWeight" source="input_option_layout.fxml" visible="false" managed="false" />
 </VBox>

@@ -174,12 +174,12 @@ public class ImageSourcesController extends ControllerBase {
         if (mapping == null) {
             return;
         }
-        if (mapping.isEmpty() || !SourceInfo.isValidMapping(mapping)) {
+        if (!mapping.isEmpty() && !SourceInfo.isValidMapping(mapping)) {
             notifyBandMappingInvalid();
             return;
         }
         SourceInfo sourceInfo = new SourceInfo(file, mapping);
-        if (!PancakeApp.app().session().addSource(sourceInfo)) {
+        if (!sourceInfo.mapping().isEmpty() && !PancakeApp.app().session().addSource(sourceInfo)) {
             notifyCannotAddToDataset();
             return;
         }
